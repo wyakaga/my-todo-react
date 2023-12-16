@@ -1,0 +1,38 @@
+import { nextui } from "@nextui-org/react";
+
+/** @type {import('tailwindcss').Config} */
+export default {
+	content: [
+		"./index.html",
+		"./src/**/*.{js,ts,jsx,tsx}",
+		"./node_modules/@nextui-org/theme/dist/**/*.{js,ts,jsx,tsx}",
+	],
+	theme: {
+		extend: {
+			fontFamily: {
+				inter: ["Inter", "sans-serif"],
+				poppins: ["Poppins", "sans-serif"],
+			},
+			keyframes: {
+				animatedgradient: {
+					"0%": { backgroundPosition: "0% 50%" },
+					"50%": { backgroundPosition: "100% 50%" },
+					"100%": { backgroundPosition: "0% 50%" },
+				},
+			},
+			backgroundSize: {
+				"300%": "300%",
+			},
+			animation: {
+				gradient: "animatedgradient 12s ease infinite alternate",
+			},
+		},
+	},
+	darkMode: "class",
+	plugins: [
+		nextui({
+			defaultTheme: "dark",
+			defaultExtendTheme: "dark",
+		}),
+	],
+};

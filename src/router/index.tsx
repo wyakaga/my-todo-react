@@ -1,23 +1,17 @@
-import {
-  createBrowserRouter,
-} from "react-router-dom";
-import PostList from "../pages/PostList";
-import PostDetail from "../pages/PostDetail";
-import PostCreate from "../pages/PostCreate";
+import { createBrowserRouter } from "react-router-dom";
+
+import Home from "@/pages/Home";
+import Auth from "@/pages/Auth";
 
 const router = createBrowserRouter([
-  {
-    path: "/",
-    element: <PostList />,
-  },
-  {
-    path: "/detail/:id",
-    element: <PostDetail />,
-  },
-  {
-    path: "/insert",
-    element: <PostCreate />,
-  },
+	{
+		path: "/",
+		element: <Home />,
+	},
+	{
+		path: "/auth",
+		element: <Auth />,
+	},
 ]);
 
-export default router
+export default router;
