@@ -21,8 +21,8 @@ function Auth() {
 
 	const [registerForm, setRegisterForm] = useState({
 		email: "",
-		password: ""
-	})
+		password: "",
+	});
 
 	const handleLoginInput = (e: ChangeEvent<HTMLInputElement>) => {
 		setLoginForm((form) => {
@@ -41,25 +41,31 @@ function Auth() {
 		loginMutate.mutate(
 			{ email: loginForm.email, password: loginForm.password, controller },
 			{
-				onSuccess: (data) => localStorage.setItem("token", data.data.token),
+				onSuccess: (data) => {
+					localStorage.setItem("token", data.data.token);
+					navigate("/app");
+				},
 			}
 		);
 	};
 
 	const handleRegisterSubmit = (e: FormEvent<HTMLFormElement>) => {
 		e.preventDefault();
-		registerMutate.mutate({email: registerForm.email, password: registerForm.password, controller}, {
-			onSuccess: () => {
-				setSelected("login")
-				navigate("#login", {replace: true})
+		registerMutate.mutate(
+			{ email: registerForm.email, password: registerForm.password, controller },
+			{
+				onSuccess: () => {
+					setSelected("login");
+					navigate("#login", { replace: true });
+				},
 			}
-		})
+		);
 	};
 
 	return (
 		<div className="grid grid-cols-1 grid-rows-1 relative home-bg bg-no-repeat bg-cover bg-center md:h-screen min-h-screen">
 			<main className="flex flex-col justify-center items-center">
-				<section className="h-4/6 w-1/2 rounded-sm bg-[#EEEEEE]/30 backdrop-filter backdrop-blur-xl">
+				<section className="md:h-4/6 h-5/6 md:w-1/2 w-11/12 rounded-sm bg-[#EEEEEE]/30 backdrop-filter backdrop-blur-xl">
 					<Tabs
 						aria-label="Authentication"
 						fullWidth
@@ -127,9 +133,20 @@ function Auth() {
 							</form>
 						</Tab>
 						<Tab key={"register"} title="Register" className="h-[90%]">
-							<form  onSubmit={handleRegisterSubmit} className="h-full flex flex-col justify-between p-5 font-poppins">
+							<form
+								onSubmit={handleRegisterSubmit}
+								className="h-full flex flex-col justify-between p-5 font-poppins"
+							>
 								<div className="flex flex-col gap-y-5">
-									<Input onChange={handleRegisterInput} size="lg" isRequired label="Email" labelPlacement="outside" type="email" name="email" />
+									<Input
+										onChange={handleRegisterInput}
+										size="lg"
+										isRequired
+										label="Email"
+										labelPlacement="outside"
+										type="email"
+										name="email"
+									/>
 									<Input
 										onChange={handleRegisterInput}
 										size="lg"
@@ -155,7 +172,12 @@ function Auth() {
 										</Link>
 									</p>
 									<div className="flex gap-2 justify-end">
-										<Button isLoading={registerMutate.isPending} type="submit" fullWidth className="bg-[#D65A31] font-medium text-lg">
+										<Button
+											isLoading={registerMutate.isPending}
+											type="submit"
+											fullWidth
+											className="bg-[#D65A31] font-medium text-lg"
+										>
 											Register
 										</Button>
 									</div>
