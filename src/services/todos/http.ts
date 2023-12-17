@@ -43,6 +43,23 @@ export const updateStatus = async (
 	return response.data;
 };
 
+export const updateTodo = async (
+	id: number,
+	token: string | undefined,
+	controller: IController,
+	title?: string,
+	description?: string,
+	deadline?: string,
+): Promise<ISingleResult> => {
+	const body = { title, description, deadline };
+	const config = {
+		headers: { Authorization: `Bearer ${token}` },
+		signal: controller.signal,
+	};
+	const response = await api.patch(`/api/v1/todo/${id}`, body, config);
+	return response.data;
+};
+
 export const createTodo = async (
 	title: string,
 	description: string,

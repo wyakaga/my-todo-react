@@ -1,6 +1,6 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 
-import { createTodo, getAll, getSingle, updateStatus } from "./http";
+import { createTodo, getAll, getSingle, updateStatus, updateTodo } from "./http";
 import IController from "@/interfaces/controller.interface";
 
 export const useGetAllQuery = (page: number, token: string, controller: IController) => {
@@ -31,6 +31,27 @@ export const useUpdateStatusMutation = () => {
 			token: string | undefined;
 			controller: IController;
 		}) => updateStatus(status, id, token, controller),
+	});
+};
+
+export const useUpdateTodoMutation = () => {
+	return useMutation({
+		mutationKey: ["todo", "update", "content"],
+		mutationFn: async ({
+			id,
+			token,
+			controller,
+			title,
+			description,
+			deadline,
+		}: {
+			id: number;
+			token: string | undefined;
+			controller: IController;
+			title?: string;
+			description?: string;
+			deadline?: string;
+		}) => updateTodo(id, token, controller, title, description, deadline),
 	});
 };
 
