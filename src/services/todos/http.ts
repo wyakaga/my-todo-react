@@ -49,7 +49,7 @@ export const updateTodo = async (
 	controller: IController,
 	title?: string,
 	description?: string,
-	deadline?: string,
+	deadline?: string
 ): Promise<ISingleResult> => {
 	const body = { title, description, deadline };
 	const config = {
@@ -73,5 +73,18 @@ export const createTodo = async (
 		signal: controller.signal,
 	};
 	const response = await api.post("api/v1/todo", body, config);
+	return response.data;
+};
+
+export const deleteTodo = async (
+	id: number,
+	token: string | undefined,
+	controller: IController
+): Promise<ISingleResult> => {
+	const config = {
+		headers: { Authorization: `Bearer ${token}` },
+		signal: controller.signal,
+	};
+	const response = await api.delete(`/api/v1/todo/${id}`, config);
 	return response.data;
 };
