@@ -43,7 +43,10 @@ function NavbarComp() {
 					aria-label={isMenuOpen ? "Close menu" : "Open menu"}
 					className="md:hidden"
 				/>
-				<NavbarBrand className="md:justify-normal justify-end">
+				<NavbarBrand
+					onClick={() => navigate(`${token ? "/app" : "/"}`)}
+					className="md:justify-normal justify-end"
+				>
 					<svg
 						className="cursor-pointer"
 						width="64px"
