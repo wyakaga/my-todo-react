@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useMemo, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import {
 	Button,
@@ -10,10 +10,23 @@ import {
 	NavbarMenuItem,
 	NavbarMenuToggle,
 } from "@nextui-org/react";
+import { useLogoutMutation } from "@/services/auth";
 
 function NavbarComp() {
+	const token = localStorage.getItem("token");
 	const [isMenuOpen, setIsMenuOpen] = useState(false);
+	const controller = useMemo(() => new AbortController(), []);
 	const navigate = useNavigate();
+	const logoutMutate = useLogoutMutation();
+
+	const handleLogout = () => {
+		logoutMutate.mutate({ token, controller}, {
+			onSuccess: () => {
+				localStorage.removeItem("token");
+				navigate("/")
+			}
+		})
+	};
 
 	return (
 		<Navbar
@@ -46,44 +59,74 @@ function NavbarComp() {
 				</NavbarBrand>
 			</NavbarContent>
 			<NavbarContent justify="end" className="md:flex hidden">
-				<NavbarItem>
-					<Button
-						radius="sm"
-						onPress={() => navigate("/auth#login")}
-						className="bg-[#EEEEEE] text-[#D65A31] text-base font-semibold"
-					>
-						Login
-					</Button>
-				</NavbarItem>
-				<NavbarItem>
-					<Button
-						onPress={() => navigate("/auth#register")}
-						radius="sm"
-						className="bg-[#EEEEEE] text-[#D65A31] text-base font-semibold"
-					>
-						Register
-					</Button>
-				</NavbarItem>
+				{token ? (
+					<NavbarItem>
+						<Button
+							isLoading={logoutMutate.isPending}
+							radius="sm"
+							onPress={() => handleLogout()}
+							className="bg-[#D65A31] text-[#EEEEEE] text-base font-semibold"
+						>
+							Logout
+						</Button>
+					</NavbarItem>
+				) : (
+					<>
+						<NavbarItem>
+							<Button
+								radius="sm"
+								onPress={() => navigate("/auth#login")}
+								className="bg-[#EEEEEE] text-[#D65A31] text-base font-semibold"
+							>
+								Login
+							</Button>
+						</NavbarItem>
+						<NavbarItem>
+							<Button
+								onPress={() => navigate("/auth#register")}
+								radius="sm"
+								className="bg-[#EEEEEE] text-[#D65A31] text-base font-semibold"
+							>
+								Register
+							</Button>
+						</NavbarItem>
+					</>
+				)}
 			</NavbarContent>
 			<NavbarMenu className="pt-20 gap-y-10">
-				<NavbarMenuItem className="w-full">
-					<Button
-						onPress={() => navigate("/auth#login")}
-						radius="sm"
-						className="bg-[#EEEEEE] text-[#D65A31] text-base font-semibold w-full"
-					>
-						Login
-					</Button>
-				</NavbarMenuItem>
-				<NavbarMenuItem className="w-full">
-					<Button
-						onPress={() => navigate("/auth#register")}
-						radius="sm"
-						className="bg-[#EEEEEE] text-[#D65A31] text-base font-semibold w-full"
-					>
-						Register
-					</Button>
-				</NavbarMenuItem>
+				{token ? (
+					<NavbarMenuItem className="w-full">
+						<Button
+							isLoading={logoutMutate.isPending}
+							onPress={() => handleLogout()}
+							radius="sm"
+							className="bg-[#D65A31] text-[#EEEEEE] text-base font-semibold w-full"
+						>
+							Logout
+						</Button>
+					</NavbarMenuItem>
+				) : (
+					<>
+						<NavbarMenuItem className="w-full">
+							<Button
+								onPress={() => navigate("/auth#login")}
+								radius="sm"
+								className="bg-[#EEEEEE] text-[#D65A31] text-base font-semibold w-full"
+							>
+								Login
+							</Button>
+						</NavbarMenuItem>
+						<NavbarMenuItem className="w-full">
+							<Button
+								onPress={() => navigate("/auth#register")}
+								radius="sm"
+								className="bg-[#EEEEEE] text-[#D65A31] text-base font-semibold w-full"
+							>
+								Register
+							</Button>
+						</NavbarMenuItem>
+					</>
+				)}
 			</NavbarMenu>
 		</Navbar>
 	);

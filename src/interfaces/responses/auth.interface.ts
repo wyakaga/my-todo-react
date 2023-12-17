@@ -18,3 +18,8 @@ export interface IRegisterRes {
 		updatedAt: string;
 	}
 }
+
+export interface ILogoutRes {
+	statusCode: number;
+	message: string;
+}

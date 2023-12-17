@@ -1,6 +1,6 @@
 import { useMutation } from "@tanstack/react-query";
 
-import { login, register } from "./http";
+import { login, logout, register } from "./http";
 import IController from "@/interfaces/controller.interface";
 
 export const useLoginMutation = () => {
@@ -30,5 +30,13 @@ export const useRegisterMutation = () => {
 			password: string;
 			controller: IController;
 		}) => register(email, password, controller),
+	});
+};
+
+export const useLogoutMutation = () => {
+	return useMutation({
+		mutationKey: ["auth", "logout"],
+		mutationFn: async ({ token, controller }: { token: string; controller: IController }) =>
+			logout(token, controller),
 	});
 };
