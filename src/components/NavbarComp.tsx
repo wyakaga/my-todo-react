@@ -20,12 +20,15 @@ function NavbarComp() {
 	const logoutMutate = useLogoutMutation();
 
 	const handleLogout = () => {
-		logoutMutate.mutate({ token, controller}, {
-			onSuccess: () => {
-				localStorage.removeItem("token");
-				navigate("/")
+		logoutMutate.mutate(
+			{ token, controller },
+			{
+				onSuccess: () => {
+					localStorage.removeItem("token");
+					navigate("/");
+				},
 			}
-		})
+		);
 	};
 
 	return (

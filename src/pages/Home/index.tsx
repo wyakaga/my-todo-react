@@ -2,9 +2,12 @@ import { Button } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
 
 import NavbarComp from "@/components/NavbarComp";
+import useTitle from "@/utils/useTitle";
 
 function Home() {
 	const navigate = useNavigate();
+
+	useTitle("My Todo: Faster. More Efficient. Manage your life better.");
 
 	return (
 		<div className="grid grid-cols-1 grid-rows-1 relative home-bg bg-no-repeat bg-cover bg-center md:h-screen min-h-screen">

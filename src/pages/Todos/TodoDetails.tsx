@@ -16,6 +16,7 @@ import NavbarComp from "@/components/NavbarComp";
 import EditTodoForm from "@/components/EditTodoForm";
 import { useDeleteTodoMutation, useGetSingleQuery } from "@/services/todos";
 import convertDate from "@/utils/convertDate";
+import useTitle from "@/utils/useTitle";
 
 function TodoDetails() {
 	const { id } = useParams();
@@ -45,6 +46,8 @@ function TodoDetails() {
 			}
 		);
 	};
+
+	useTitle(data ? `${data.data.title}` : "Todo details");
 
 	return (
 		<div className="grid grid-cols-1 grid-rows-1 relative app-bg bg-no-repeat bg-cover bg-center min-h-screen">

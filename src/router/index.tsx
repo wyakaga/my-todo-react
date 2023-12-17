@@ -4,23 +4,40 @@ import Home from "@/pages/Home";
 import Auth from "@/pages/Auth";
 import Todo from "@/pages/Todos";
 import TodoDetails from "@/pages/Todos/TodoDetails";
+import { IsLogin, PrivateRoute } from "@/utils/authChecker";
 
 const router = createBrowserRouter([
 	{
 		path: "/",
-		element: <Home />,
+		element: (
+			<IsLogin>
+				<Home />
+			</IsLogin>
+		),
 	},
 	{
 		path: "/auth",
-		element: <Auth />,
+		element: (
+			<IsLogin>
+				<Auth />
+			</IsLogin>
+		),
 	},
 	{
 		path: "/app",
-		element: <Todo />,
+		element: (
+			<PrivateRoute>
+				<Todo />
+			</PrivateRoute>
+		),
 	},
 	{
 		path: "/app/detail/:id",
-		element: <TodoDetails />,
+		element: (
+			<PrivateRoute>
+				<TodoDetails />
+			</PrivateRoute>
+		),
 	},
 ]);
 

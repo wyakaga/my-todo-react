@@ -25,6 +25,7 @@ import AddButton from "@/components/AddButton";
 import { useGetAllQuery, useUpdateStatusMutation } from "@/services/todos";
 import convertDate from "@/utils/convertDate";
 import NewTodoForm from "@/components/NewTodoForm";
+import useTitle from "@/utils/useTitle";
 
 function Todo() {
 	const token = localStorage.getItem("token");
@@ -58,6 +59,8 @@ function Todo() {
 			}
 		);
 	};
+
+	useTitle("My Todo")
 
 	return (
 		<div className="grid grid-cols-1 grid-rows-1 relative app-bg bg-no-repeat bg-cover bg-center min-h-screen">

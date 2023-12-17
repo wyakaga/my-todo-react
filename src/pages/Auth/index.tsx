@@ -3,6 +3,7 @@ import { useLocation, useNavigate } from "react-router-dom";
 import { Button, Input, Tab, Tabs, Link } from "@nextui-org/react";
 
 import { useLoginMutation, useRegisterMutation } from "@/services/auth";
+import useTitle from "@/utils/useTitle";
 
 function Auth() {
 	const { hash } = useLocation();
@@ -61,6 +62,8 @@ function Auth() {
 			}
 		);
 	};
+
+	useTitle(hash === "#login" ? "Login" : "Register");
 
 	return (
 		<div className="grid grid-cols-1 grid-rows-1 relative home-bg bg-no-repeat bg-cover bg-center md:h-screen min-h-screen">
