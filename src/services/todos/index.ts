@@ -1,12 +1,19 @@
 import { useQuery, useMutation } from "@tanstack/react-query";
 
-import { createTodo, getAll, updateStatus } from "./http";
+import { createTodo, getAll, getSingle, updateStatus } from "./http";
 import IController from "@/interfaces/controller.interface";
 
 export const useGetAllQuery = (page: number, token: string, controller: IController) => {
 	return useQuery({
 		queryKey: ["todo", "all", page],
 		queryFn: async () => getAll(page, token, controller),
+	});
+};
+
+export const useGetSingleQuery = (id: number, token: string, controller: IController) => {
+	return useQuery({
+		queryKey: ["todo", "single", id],
+		queryFn: async () => getSingle(id, token, controller),
 	});
 };
 

@@ -26,7 +26,7 @@ export interface IGetAll {
 	};
 }
 
-export interface ICreate {
+export interface ISingleResult {
 	statusCode: number;
 	message: string;
 	data: IAllResult;
