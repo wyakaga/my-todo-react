@@ -1,6 +1,6 @@
 import { useMemo } from "react";
 import { useParams } from "react-router-dom";
-import { Divider } from "@nextui-org/react";
+import { Divider, Skeleton } from "@nextui-org/react";
 
 import NavbarComp from "@/components/NavbarComp";
 import { useGetSingleQuery } from "@/services/todos";
@@ -11,7 +11,7 @@ function TodoDetails() {
 	const token = localStorage.getItem("token");
 	const controller = useMemo(() => new AbortController(), []);
 
-	const { data } = useGetSingleQuery(Number(id), token, controller);
+	const { data, isLoading } = useGetSingleQuery(Number(id), token, controller);
 
 	return (
 		<div className="grid grid-cols-1 grid-rows-1 relative app-bg bg-no-repeat bg-cover bg-center min-h-screen">
@@ -25,11 +25,36 @@ function TodoDetails() {
 					</div>
 					<div className="p-8 h-full rounded-sm">
 						<div className="bg-default-100 h-full flex flex-col p-4 font-poppins">
-							<p className="text-2xl font-semibold">{data.data.title}</p>
+							{isLoading ? (
+								<Skeleton className="h-8 w-3/12 rounded-sm" />
+							) : (
+								<p className="text-2xl font-semibold">{data && data.data.title}</p>
+							)}
 							<Divider className="my-3" />
 							<div className="flex flex-col gap-y-7 overflow-auto">
-								<p className="text-sm italic">{convertDate(data.data.deadline)}</p>
-								<p className="text-xl font-medium">{data.data.description}</p>
+								{isLoading ? (
+									<Skeleton className="h-5 w-2/12 rounded-sm" />
+								) : (
+									<p className="text-sm italic">{data && convertDate(data.data.deadline)}</p>
+								)}
+								{isLoading ? (
+									Array.from({ length: 8 }).map((_, i) => {
+										if (i % 4 === 0) {
+											return <Skeleton className="h-7 w-7/12 rounded-sm" />;
+										}
+										if (i % 4 === 1) {
+											return <Skeleton className="h-7 w-5/12 rounded-sm" />;
+										}
+										if (i % 4 === 2) {
+											return <Skeleton className="h-7 w-11/12 rounded-sm" />;
+										}
+										if (i % 4 === 3) {
+											return <Skeleton className="h-7 w-9/12 rounded-sm" />;
+										}
+									})
+								) : (
+									<p className="text-xl font-medium">{data && data.data.description}</p>
+								)}
 							</div>
 						</div>
 					</div>

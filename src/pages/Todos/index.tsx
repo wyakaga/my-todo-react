@@ -1,5 +1,7 @@
 /* eslint-disable no-mixed-spaces-and-tabs */
 import { FormEvent, useState, useMemo } from "react";
+import { useNavigate } from "react-router-dom";
+import { useQueryClient } from "@tanstack/react-query";
 import {
 	Card,
 	CardBody,
@@ -17,7 +19,6 @@ import {
 	Button,
 	useDisclosure,
 } from "@nextui-org/react";
-import { useQueryClient } from "@tanstack/react-query";
 
 import NavbarComp from "@/components/NavbarComp";
 import AddButton from "@/components/AddButton";
@@ -28,6 +29,7 @@ import NewTodoForm from "@/components/NewTodoForm";
 function Todo() {
 	const token = localStorage.getItem("token");
 	const controller = useMemo(() => new AbortController(), []);
+	const navigate = useNavigate();
 	const queryClient = useQueryClient();
 	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
@@ -171,7 +173,10 @@ function Todo() {
 															</Popover>
 														</CardHeader>
 														<Divider />
-														<CardBody className="font-poppins flex flex-col gap-y-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
+														<CardBody
+															onClick={() => navigate(`/app/detail/${datum.id}`)}
+															className="font-poppins flex flex-col gap-y-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']"
+														>
 															<p className="text-xs text-[#EEEEEE]/40 italic">
 																{convertDate(datum.deadline)}
 															</p>
@@ -287,7 +292,10 @@ function Todo() {
 															</Popover>
 														</CardHeader>
 														<Divider />
-														<CardBody className="font-poppins flex flex-col gap-y-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
+														<CardBody
+															onClick={() => navigate(`/app/detail/${datum.id}`)}
+															className="font-poppins flex flex-col gap-y-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']"
+														>
 															<p className="text-xs text-[#EEEEEE]/40 italic">
 																{convertDate(datum.deadline)}
 															</p>
@@ -403,7 +411,10 @@ function Todo() {
 															</Popover>
 														</CardHeader>
 														<Divider />
-														<CardBody className="font-poppins flex flex-col gap-y-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']">
+														<CardBody
+															onClick={() => navigate(`/app/detail/${datum.id}`)}
+															className="font-poppins flex flex-col gap-y-2 [&::-webkit-scrollbar]:hidden [-ms-overflow-style:'none'] [scrollbar-width:'none']"
+														>
 															<p className="text-xs text-[#EEEEEE]/40 italic">
 																{convertDate(datum.deadline)}
 															</p>
