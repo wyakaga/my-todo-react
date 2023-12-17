@@ -15,17 +15,21 @@ import {
 	RadioGroup,
 	Radio,
 	Button,
+	useDisclosure,
 } from "@nextui-org/react";
 import { useQueryClient } from "@tanstack/react-query";
 
 import NavbarComp from "@/components/NavbarComp";
+import AddButton from "@/components/AddButton";
 import { useGetAllQuery, useUpdateStatusMutation } from "@/services/todos";
 import convertDate from "@/utils/convertDate";
+import NewTodoForm from "@/components/NewTodoForm";
 
 function Todo() {
 	const token = localStorage.getItem("token");
 	const controller = useMemo(() => new AbortController(), []);
 	const queryClient = useQueryClient();
+	const { isOpen, onOpen, onOpenChange } = useDisclosure();
 
 	const [page, setPage] = useState(1);
 	const [status, setStatus] = useState(3);
@@ -55,8 +59,18 @@ function Todo() {
 
 	return (
 		<div className="grid grid-cols-1 grid-rows-1 relative app-bg bg-no-repeat bg-cover bg-center min-h-screen">
-			<main className="flex flex-col items-center gap-y-5 pb-3">
+			<main className="flex flex-col items-center gap-y-5 pb-20">
 				<NavbarComp />
+				<section className="flex justify-start w-11/12">
+					<AddButton onOpen={onOpen} />
+				</section>
+				<NewTodoForm
+					isOpen={isOpen}
+					onOpenChange={onOpenChange}
+					token={token}
+					controller={controller}
+					page={page}
+				/>
 				<section className="h-full w-11/12 rounded-sm bg-[#EEEEEE]/30 backdrop-filter backdrop-blur-xl">
 					<Tabs
 						fullWidth

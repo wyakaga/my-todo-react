@@ -1,5 +1,5 @@
 import IController from "@/interfaces/controller.interface";
-import { IGetAll, IAllResult } from "@/interfaces/responses/todos.interface";
+import { IGetAll, IAllResult, ICreate } from "@/interfaces/responses/todos.interface";
 import api from "../base";
 
 export const getAll = async (
@@ -27,5 +27,21 @@ export const updateStatus = async (
 		signal: controller.signal,
 	};
 	const response = await api.patch(`/api/v1/todo/${id}/status`, body, config);
+	return response.data;
+};
+
+export const createTodo = async (
+	title: string,
+	description: string,
+	deadline: string,
+	token: string | undefined,
+	controller: IController
+): Promise<ICreate> => {
+	const body = { title, description, deadline };
+	const config = {
+		headers: { Authorization: `Bearer ${token}` },
+		signal: controller.signal,
+	};
+	const response = await api.post("api/v1/todo", body, config);
 	return response.data;
 };
