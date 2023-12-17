@@ -1,7 +1,7 @@
 import { Button } from "@nextui-org/react";
 import { useNavigate } from "react-router-dom";
 
-import NavbarComp from "@/assets/NavbarComp";
+import NavbarComp from "@/components/NavbarComp";
 
 function Home() {
 	const navigate = useNavigate();

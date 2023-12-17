@@ -2,6 +2,7 @@ import { createBrowserRouter } from "react-router-dom";
 
 import Home from "@/pages/Home";
 import Auth from "@/pages/Auth";
+import Todo from "@/pages/Todos";
 
 const router = createBrowserRouter([
 	{
@@ -11,6 +12,10 @@ const router = createBrowserRouter([
 	{
 		path: "/auth",
 		element: <Auth />,
+	},
+	{
+		path: "/app",
+		element: <Todo />,
 	},
 ]);
 

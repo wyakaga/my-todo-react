@@ -3,5 +3,9 @@
 @tailwind utilities;
 
 .home-bg {
-  @apply bg-[url("./assets/bg.webp")]
+	@apply bg-[url("./assets/bg.webp")];
+}
+
+.app-bg {
+	@apply bg-[url("./assets/app-bg.webp")];
 }
