@@ -5,6 +5,7 @@ import Auth from "@/pages/Auth";
 import Todo from "@/pages/Todos";
 import TodoDetails from "@/pages/Todos/TodoDetails";
 import { IsLogin, PrivateRoute } from "@/utils/authChecker";
+import NotFound from "@/pages/Error";
 
 const router = createBrowserRouter([
 	{
@@ -38,6 +39,10 @@ const router = createBrowserRouter([
 				<TodoDetails />
 			</PrivateRoute>
 		),
+	},
+	{
+		path: "*",
+		element: <NotFound />,
 	},
 ]);
 
