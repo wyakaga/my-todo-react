@@ -25,8 +25,6 @@ function NewTodoForm({ isOpen, onOpenChange, token, controller, page }) {
 	});
 	const [errMessage, setErrMessage] = useState("");
 
-	console.log(form);
-
 	const handleCreateTodoInput = (e: ChangeEvent<HTMLInputElement>) => {
 		setForm((form) => {
 			return { ...form, [e.target.name]: e.target.value };
